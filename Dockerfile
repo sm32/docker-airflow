@@ -1,11 +1,11 @@
 # VERSION 1.10.2
-# AUTHOR: Matthieu "Puckel_" Roisil
-# DESCRIPTION: Basic Airflow container
-# BUILD: docker build --rm -t puckel/docker-airflow .
-# SOURCE: https://github.com/puckel/docker-airflow
+# AUTHOR: Sreekanth "smahesala_" Mahesala
+# DESCRIPTION: Basic Airflow container for Databricks
+# BUILD: docker build --rm -t smahesala/docker-airflow .
+# SOURCE: https://github.com/sm32/docker-airflow
 
-FROM python:3.6-slim
-LABEL maintainer="Puckel_"
+FROM python:2
+LABEL maintainer="Smahesala_"
 
 # Never prompts the user for choices on installation/configuration of packages
 ENV DEBIAN_FRONTEND noninteractive
@@ -56,6 +56,11 @@ RUN set -ex \
     && pip install pyOpenSSL \
     && pip install ndg-httpsclient \
     && pip install pyasn1 \
+    && pip install databricks-connect==5.1.0.post0 \
+    && pip install pyyaml \
+    && pip install uszipcode==0.2.2 \
+    && pip install pandas \
+    && pip install numpy \
     && pip install apache-airflow[crypto,celery,postgres,hive,jdbc,mysql,ssh${AIRFLOW_DEPS:+,}${AIRFLOW_DEPS}]==${AIRFLOW_VERSION} \
     && pip install 'redis>=2.10.5,<3' \
     && if [ -n "${PYTHON_DEPS}" ]; then pip install ${PYTHON_DEPS}; fi \

@@ -8,15 +8,19 @@ services:
             - POSTGRES_DB=airflow
 
     webserver:
-        image: puckel/docker-airflow:1.10.2
+        image: smahesala/docker-airflow:latest
         restart: always
         depends_on:
             - postgres
         environment:
             - LOAD_EX=n
             - EXECUTOR=Local
+            - RXPERSO_ENV=dev_p1
+            - DB_CLUSTER=garbage_value
+            - PRJ_PATH=/usr/local/airflow/rxperso
         volumes:
             - ./dags:/usr/local/airflow/dags
+            - ./../rxperso:/usr/local/airflow/rxperso
             # Uncomment to include custom plugins
             # - ./plugins:/usr/local/airflow/plugins
         ports:
